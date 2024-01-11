@@ -1,42 +1,50 @@
-import 'package:durma_sales_app/Routes/router.dart';
+import 'package:durma_sales_app/core/routes/router.dart';
+import 'package:durma_sales_app/core/services/hive_service.dart';
+import 'package:durma_sales_app/view/orders/order_data_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  HiveService.instance.initHiveService();
+  runApp(const DurmaSalesApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DurmaSalesApp extends StatelessWidget {
+  const DurmaSalesApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          elevation: 5,
-          color: Colors.red, // AppBar'ın arka plan rengi
-          iconTheme: const IconThemeData(color: Colors.white),
-          toolbarTextStyle: const TextTheme(
-            headline6: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ).bodyMedium,
-          titleTextStyle: const TextTheme(
-            headline6: TextStyle(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => OrderDataViewModel())
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: "Durma Sales App",
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            elevation: 5,
+            color: Colors.red,
+            iconTheme: const IconThemeData(color: Colors.white),
+            toolbarTextStyle: const TextTheme(
+              headline6: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 18.0),
-          ).titleLarge,
+              ),
+            ).bodyMedium,
+            titleTextStyle: const TextTheme(
+              headline6: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0),
+            ).titleLarge,
+          ),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 255, 1, 1)),
+          useMaterial3: true,
         ),
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 1, 1)),
-        useMaterial3: true,
+        routerConfig: router,
       ),
-      routerConfig: router,
     );
   }
 }

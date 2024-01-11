@@ -1,11 +1,12 @@
 import 'package:hive/hive.dart';
+part 'order_model.g.dart';
 
-@HiveType(typeId: 0)
-class Orders {
+@HiveType(typeId: 4)
+class OrderModel extends HiveObject {
   @HiveField(0)
-  final int id;
-  @HiveField(1)
   final int stockNo;
+  @HiveField(1)
+  final int quantity;
   @HiveField(2)
   final int price;
   @HiveField(3)
@@ -14,9 +15,10 @@ class Orders {
   final String customerName;
   @HiveField(5)
   final DateTime date;
-  Orders(
-      {required this.id,
-      required this.stockName,
+
+  OrderModel(
+      {required this.stockName,
+      required this.quantity,
       required this.price,
       required this.customerName,
       required this.stockNo,
